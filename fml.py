@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 LOGIN_URL = 'https://sso.noovie.com/login?appKey=fml_web/login-confirm'
 MOVIES_URL = 'https://fantasymovieleague.com/checkoutmovies'
 payload = {
-    'emailAddress': 'Frank.Moreno95@gmail.com',
+    'emailAddress': '',
     'password': ''
 }
 Movies = {}
@@ -49,3 +49,9 @@ def getMovies(session):
 def getLeagues(session):
     LEAGUES_URL = 'https://fantasymovieleague.com/league/directory'
     Leagues = {}
+
+def submitPicks():
+    
+def getPicks():
+    
+
