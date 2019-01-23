@@ -5,7 +5,7 @@ LOGIN_URL = 'https://sso.noovie.com/login?appKey=fml_web/login-confirm'
 MOVIES_URL = 'https://fantasymovieleague.com/checkoutmovies'
 payload = {
     'emailAddress': 'Frank.Moreno95@gmail.com',
-    'password': 'Tacos123'
+    'password': ''
 }
 Movies = {}
 

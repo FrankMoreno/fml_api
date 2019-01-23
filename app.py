@@ -17,7 +17,7 @@ def getMovies():
 
     payload = {
         'emailAddress': 'Frank.Moreno95@gmail.com',
-        'password': 'Tacos123'
+        'password':'
     }
 
     with requests.Session() as session:
