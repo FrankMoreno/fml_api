@@ -1,7 +1,8 @@
-import flask
+from flask import Flask, session, jsonify
 import requests
+import fml
 
-app = flask.Flask(__name__)
+app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def heartBeat():
@@ -9,14 +10,16 @@ def heartBeat():
 
 @app.route('/login', methods=['POST'])
 def login():
-    return "You logged in"
+    fml.login('Frank.Moreno95@gmail.com','*******')
+    print('You logged in.')
     # PARAMETERS: Username + password
     # Call login method on fml
     # RETURN: session/cookies
     
 @app.route('/movies', methods=['GET'])
 def returnMovies():
-    return "these are your movies"
+    movies = fml.getMovies(session)
+    return jsonify(movies)
     # PARAMETERS: Username + password                         
     # Call get movies with session
     # RETURN: list of movies in JSON                          

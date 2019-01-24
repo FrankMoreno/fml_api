@@ -9,7 +9,8 @@ def login(email, password):
     }
     
     session = requests.Session()
-    response = session.post(LOGIN_URL, data=payload)
+    session.post(LOGIN_URL, data=payload)
+
     return session
 
 def getMovies(session):
@@ -33,10 +34,10 @@ def getLeagues(session):
     soup = BeautifulSoup(response.text, 'html.parser')
     leagueRows = soup.find("table",class_='tableType-league noLeagues').tbody
     for leagueRow in leagueRows.find_all("tr"):
-        print(leagueRow.find("td",class_='league-name first').a.get_text())
-        # TO-DO get href
-        # TO-DO get rankings
-    
+        leagueName = leagueRow.find("td",class_='league-name first').a.get_text()
+        leagueLink = leagueRow.find("td",class_='league-name first').a['href']
+        Leagues[leagueName] = {'link':leagueLink}
+
     return Leagues
 
 def submitPicks():
@@ -46,9 +47,9 @@ def getPicks():
     Picks = {}
 
 def main():
-    session = login("Frank.Moreno95@gmail.com", "Tacos123")
-    getLeagues(session)
-    getMovies(session)
+    session = login("Frank.Moreno95@gmail.com", "*******")
+    print(getLeagues(session))
+    print(getMovies(session))
 
 if __name__ == '__main__':
     main()
