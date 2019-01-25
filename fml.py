@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import json
 
 def login(email, password):
     LOGIN_URL = 'https://fantasymovieleague.com/auth/loginconfirm'
@@ -9,14 +10,18 @@ def login(email, password):
     }
     
     session = requests.Session()
-    response = session.post(LOGIN_URL, data=payload)
-    return session
+    session.post(LOGIN_URL, data=payload)
 
-def getMovies(session):
+    return session.cookies.get_dict()
+
+def getMovies(newCookies):
     MOVIES_URL = 'https://fantasymovieleague.com/checkoutmovies'
     Movies = {}
-    
-    response = session.get(MOVIES_URL)
+    newCookies = json.loads(newCookies)
+
+    session=requests.Session()
+    response = session.get(MOVIES_URL, cookies=newCookies)
+
     soup = BeautifulSoup(response.text, 'html.parser')
     for movieRow in soup.find("tbody").contents:
         bux = movieRow.find("td",class_='movie-price numeric stat sorted first').get_text()
@@ -25,18 +30,21 @@ def getMovies(session):
         
     return Movies
 
-def getLeagues(session):
+def getLeagues(newCookies):
     LEAGUES_URL = 'https://fantasymovieleague.com/league/directory'
     Leagues = {}
+    newCookies = json.loads(newCookies)
 
-    response = session.get(LEAGUES_URL)
+    session=requests.Session()
+    response = session.get(LEAGUES_URL, cookies=newCookies)
+
     soup = BeautifulSoup(response.text, 'html.parser')
     leagueRows = soup.find("table",class_='tableType-league noLeagues').tbody
     for leagueRow in leagueRows.find_all("tr"):
-        print(leagueRow.find("td",class_='league-name first').a.get_text())
-        # TO-DO get href
-        # TO-DO get rankings
-    
+        leagueName = leagueRow.find("td",class_='league-name first').a.get_text()
+        leagueLink = leagueRow.find("td",class_='league-name first').a['href']
+        Leagues[leagueName] = {'link':leagueLink}
+
     return Leagues
 
 def submitPicks():
@@ -46,9 +54,9 @@ def getPicks():
     Picks = {}
 
 def main():
-    session = login("Frank.Moreno95@gmail.com", "Tacos123")
-    getLeagues(session)
-    getMovies(session)
+    cookies = login("Frank.Moreno95@gmail.com", "*******")
+    print(getLeagues(cookies))
+    print(getMovies(cookies))
 
 if __name__ == '__main__':
     main()
