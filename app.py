@@ -8,7 +8,7 @@ CORS(app)
 
 @app.route('/', methods=['GET'])
 def heartBeat():
-    return 'Server is up.'
+    return '{"Status": "Server is up."}'
 
 @app.route('/login', methods=['GET'])
 def login():
