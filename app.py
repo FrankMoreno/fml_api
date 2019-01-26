@@ -1,10 +1,10 @@
 from flask import Flask, session, jsonify
-import requests
+from flask_cors import CORS
 import fml
 import json
 
 app = Flask(__name__)
-
+CORS(app)
 @app.route('/', methods=['GET'])
 def heartBeat():
     return 'Server is up.'
