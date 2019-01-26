@@ -5,6 +5,7 @@ import json
 
 app = Flask(__name__)
 CORS(app)
+
 @app.route('/', methods=['GET'])
 def heartBeat():
     return 'Server is up.'
@@ -30,5 +31,6 @@ def returnLeagues():
     # TODO add check for cookies
     leagues = fml.getLeagues(session['cookies'])
     return jsonify(leagues)                         
-        
-#app.run(debug=True)
+
+if __name__ == '__main__':        
+    app.run(debug=True)
