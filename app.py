@@ -31,4 +31,4 @@ def returnLeagues():
     leagues = fml.getLeagues(session['cookies'])
     return jsonify(leagues)                         
         
-app.run(debug=True)
+#app.run(debug=True)
