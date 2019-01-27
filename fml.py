@@ -23,10 +23,7 @@ def getMovies():
 
     soup = BeautifulSoup(response.text, 'html.parser')
     for movieRow in soup.find("tbody").contents:
-        temp = {
-            "name" : "",
-            "bux" : ""
-        }
+        temp = {}
         temp["bux"] = movieRow.find("td",class_='movie-price numeric stat first').get_text()
         temp["name"] = movieRow.find("td",class_='movie-info').div.div.h3.get_text()
         Movies["movies"].append(temp)  
