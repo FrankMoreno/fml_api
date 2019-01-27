@@ -14,20 +14,22 @@ def login(email, password):
 
     return session.cookies.get_dict()
 
-def getMovies(newCookies):
+def getMovies():
     MOVIES_URL = 'https://fantasymovieleague.com/checkoutmovies'
-    Movies = {}
-    newCookies = json.loads(newCookies)
+    Movies = {"movies":[]}
 
     session=requests.Session()
-    response = session.get(MOVIES_URL, cookies=newCookies)
+    response = session.get(MOVIES_URL)
 
     soup = BeautifulSoup(response.text, 'html.parser')
     for movieRow in soup.find("tbody").contents:
-        bux = movieRow.find("td",class_='movie-price numeric stat sorted first').get_text()
-        name = movieRow.find("td",class_='movie-info').div.div.h3.get_text()
-        Movies[name] = bux
-        
+        temp = {
+            "name" : "",
+            "bux" : ""
+        }
+        temp["bux"] = movieRow.find("td",class_='movie-price numeric stat first').get_text()
+        temp["name"] = movieRow.find("td",class_='movie-info').div.div.h3.get_text()
+        Movies["movies"].append(temp)  
     return Movies
 
 def getLeagues(newCookies):
@@ -49,14 +51,16 @@ def getLeagues(newCookies):
 
 def submitPicks():
     Picks = {}
+    return Picks
     
 def getPicks():
     Picks = {}
+    return Picks
 
 def main():
-    cookies = login("Frank.Moreno95@gmail.com", "*******")
+    cookies = login("Frank.Moreno95@gmail.com", "Tacos123")
     print(getLeagues(cookies))
-    print(getMovies(cookies))
+    print(getMovies())
 
 if __name__ == '__main__':
     main()

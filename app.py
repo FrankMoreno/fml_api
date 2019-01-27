@@ -4,6 +4,7 @@ import fml
 import json
 
 app = Flask(__name__)
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 CORS(app)
 
 @app.route('/', methods=['GET'])
@@ -13,7 +14,7 @@ def heartBeat():
 @app.route('/login', methods=['GET'])
 def login():
     # TODO Add check if user is already logged in
-    newCookies = fml.login('Frank.Moreno95@gmail.com','*******')
+    newCookies = fml.login('Frank.Moreno95@gmail.com','Tacos123')
     session['cookies'] = json.dumps(newCookies)
     return 'You logged in'
     # PARAMETERS: Username + password
@@ -23,7 +24,7 @@ def login():
 @app.route('/movies', methods=['GET'])
 def returnMovies():
     # TODO add check for cookies
-    movies = fml.getMovies(session['cookies'])
+    movies = fml.getMovies()
     return jsonify(movies)
 
 @app.route('/leagues', methods=['GET'])
