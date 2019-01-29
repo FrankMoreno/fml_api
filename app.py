@@ -33,5 +33,6 @@ def returnLeagues():
     leagues = fml.getLeagues(session['cookies'])
     return jsonify(leagues)                         
 
+# TODO Add estimates route
 if __name__ == '__main__':        
     app.run(debug=True)
