@@ -25,7 +25,7 @@ def getMovies():
     for movieRow in soup.find("tbody").contents:
         temp = {}
         temp["bux"] = movieRow.find("td",class_='movie-price numeric stat sorted first').get_text()
-        temp["name"] = movieRow.find("td",class_='movie-info').div.div.h3.get_text()
+        temp["name"] = movieRow.find("div",class_='movie-info-name').h3.get_text()
         Movies["movies"].append(temp)  
     return Movies
 
