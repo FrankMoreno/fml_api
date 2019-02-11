@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import time
 import json
 
 def login(email, password):
@@ -46,6 +47,24 @@ def getLeagues(newCookies):
 
     return Leagues
 
+def getEstimates():
+    ESTIMATES_URL = 'http://www.boxofficereport.com/predictions/predictions.html'
+    Estimates = {"estimates":[]}
+    
+    session=requests.Session()
+    response = session.get(ESTIMATES_URL)
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    moviesTable = (soup.find_all("table"))[2] # There are multiple tables on the page and none have unique identifiers
+    movieRows = moviesTable.find_all('tr')[1:]
+    for movieRow in movieRows:
+        cells = movieRow.find_all('td')
+        temp = {}
+        temp['name'] = cells[1].get_text()
+        temp['estimate'] = cells[2].get_text()
+        Estimates['estimates'].append(temp)
+    print(Estimates)
+
 def submitPicks():
     Picks = {}
     return Picks
@@ -56,8 +75,9 @@ def getPicks():
 
 def main():
     cookies = login("Frank.Moreno95@gmail.com", "Tacos123")
-    print(getLeagues(cookies))
-    print(getMovies())
+    # print(getLeagues(cookies))
+    # print(getMovies())
+    getEstimates()
 
 if __name__ == '__main__':
     main()
