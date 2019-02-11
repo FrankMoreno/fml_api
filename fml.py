@@ -48,6 +48,8 @@ def getLeagues(newCookies):
     return Leagues
 
 def getEstimates():
+    # TODO Need to pull data from multiple sources and average them
+    # TODO will eventually need to check if one estimate is vastly outdated
     ESTIMATES_URL = 'http://www.boxofficereport.com/predictions/predictions.html'
     Estimates = {"estimates":[]}
     
@@ -63,7 +65,8 @@ def getEstimates():
         temp['name'] = cells[1].get_text()
         temp['estimate'] = cells[2].get_text()
         Estimates['estimates'].append(temp)
-    print(Estimates)
+        
+    return Estimates
 
 def submitPicks():
     Picks = {}

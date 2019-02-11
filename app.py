@@ -17,9 +17,6 @@ def login():
     newCookies = fml.login('Frank.Moreno95@gmail.com','Tacos123')
     session['cookies'] = json.dumps(newCookies)
     return 'You logged in'
-    # PARAMETERS: Username + password
-    # Call login method on fml
-    # RETURN: session/cookies
     
 @app.route('/movies', methods=['GET'])
 def returnMovies():
@@ -34,5 +31,9 @@ def returnLeagues():
     return jsonify(leagues)                         
 
 # TODO Add estimates route
+@app.route('/estimates', methods=['GET'])
+    estimates = fml.getEstimates()
+    return jsonify(estimates)
+    
 if __name__ == '__main__':        
     app.run(debug=True)
