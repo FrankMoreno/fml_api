@@ -32,8 +32,9 @@ def returnLeagues():
 
 # TODO Add estimates route
 @app.route('/estimates', methods=['GET'])
+def returnEstimates():
     estimates = fml.getEstimates()
     return jsonify(estimates)
-    
+
 if __name__ == '__main__':        
     app.run(debug=True)
