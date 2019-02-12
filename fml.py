@@ -28,6 +28,7 @@ def getMovies():
         temp = {}
         temp["bux"] = movieRow.find("td",class_='movie-price numeric stat sorted first').get_text()
         temp["name"] = movieRow.find("div",class_='movie-info-name').h3.get_text()
+        temp["posterLink"] = movieRow.find("div",class_='movie-info').a['data-img-src']
         Movies["movies"].append(temp)  
     return Movies
 

@@ -30,7 +30,6 @@ def returnLeagues():
     leagues = fml.getLeagues(session['cookies'])
     return jsonify(leagues)                         
 
-# TODO Add estimates route
 @app.route('/estimates', methods=['GET'])
 def returnEstimates():
     estimates = fml.getEstimates()
