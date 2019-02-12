@@ -20,7 +20,6 @@ def login():
     
 @app.route('/movies', methods=['GET'])
 def returnMovies():
-    # TODO add check for cookies
     movies = fml.getMovies()
     return jsonify(movies)
 
