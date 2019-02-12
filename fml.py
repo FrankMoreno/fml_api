@@ -62,7 +62,8 @@ def getEstimates():
     for movieRow in movieRows:
         cells = movieRow.find_all('td')
         temp = {}
-        temp['name'] = (cells[1].get_text()).split('(')[0]
+        # TODO Clean up this monstrosity, probably just use a regex
+        temp['name'] = ((cells[1].get_text()).split('(')[0]).strip()
         temp['estimate'] = cells[2].get_text()
         Estimates['estimates'].append(temp)
         
