@@ -2,6 +2,7 @@ from flask import Flask, session, jsonify
 from flask_cors import CORS
 import fml
 import json
+import os
 
 app = Flask(__name__)
 app.secret_key = os.getenv('FLASK_KEY')

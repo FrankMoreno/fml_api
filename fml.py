@@ -23,6 +23,7 @@ def getMovies():
     response = session.get(MOVIES_URL)
 
     soup = BeautifulSoup(response.text, 'html.parser')
+    # TODO Add link to movie poster picture
     for movieRow in soup.find("tbody").contents:
         temp = {}
         temp["bux"] = movieRow.find("td",class_='movie-price numeric stat sorted first').get_text()
