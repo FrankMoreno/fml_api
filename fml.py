@@ -26,7 +26,7 @@ def getMovies():
     # TODO Add link to movie poster picture
     for movieRow in soup.find("tbody").contents:
         temp = {}
-        temp["bux"] = movieRow.find("td",class_='movie-price numeric stat sorted first').get_text()
+        temp["bux"] = movieRow.find("td",class_='movie-price numeric stat first').get_text()
         temp["name"] = movieRow.find("div",class_='movie-info-name').h3.get_text()
         temp["posterLink"] = movieRow.find("div",class_='movie-info').a['data-img-src']
         Movies["movies"].append(temp)  
@@ -82,7 +82,7 @@ def getPicks():
 def main():
     cookies = login("Frank.Moreno95@gmail.com", "Tacos123")
     # print(getLeagues(cookies))
-    # print(getMovies())
+    print(getMovies())
     getEstimates()
 
 if __name__ == '__main__':
