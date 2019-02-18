@@ -1,4 +1,4 @@
-from flask import Flask, session, jsonify
+from flask import Flask, session, jsonify, request
 from flask_cors import CORS
 import fml
 import json
@@ -12,10 +12,10 @@ CORS(app)
 def heartBeat():
     return '{"Status": "Server is up."}'
 
-@app.route('/login', methods=['GET'])
+@app.route('/login', methods=['POST'])
 def login():
     # TODO Add check if user is already logged in
-    newCookies = fml.login('Frank.Moreno95@gmail.com','Tacos123')
+    newCookies = fml.login(request.args.get['email'],request.args.get['password'])
     session['cookies'] = json.dumps(newCookies)
     return 'You logged in'
     
@@ -26,9 +26,11 @@ def returnMovies():
 
 @app.route('/leagues', methods=['GET'])
 def returnLeagues():
-    # TODO add check for cookies
-    leagues = fml.getLeagues(session['cookies'])
-    return jsonify(leagues)                         
+    if 'cookies' in session:
+        leagues = fml.getLeagues(session['cookies'])
+        return jsonify(leagues)
+    else:
+        return jsonify('{}')                         
 
 @app.route('/estimates', methods=['GET'])
 def returnEstimates():
