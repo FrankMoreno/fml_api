@@ -81,7 +81,6 @@ def getPicks():
     return Picks
 
 def main():
-    cookies = login("Frank.Moreno95@gmail.com", "Tacos123")
     # print(getLeagues(cookies))
     print(getMovies())
     getEstimates()
