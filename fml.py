@@ -23,14 +23,14 @@ def getMovies():
     response = session.get(MOVIES_URL)
 
     soup = BeautifulSoup(response.text, 'html.parser')
-    # TODO Add link to movie poster picture
     for movieRow in soup.find("tbody").contents:
-        temp = {}
-        # TODO use regex to search for this class
-        temp["bux"] = movieRow.find("td",class_='movie-price numeric stat first').get_text()
-        temp["name"] = movieRow.find("div",class_='movie-info-name').h3.get_text()
-        temp["posterLink"] = movieRow.find("div",class_='movie-info').a['data-img-src']
+        temp = {
+            "bux": movieRow.select_one('td[class*="movie-price numeric"]').get_text(),
+            "name": movieRow.find("div",class_='movie-info-name').h3.get_text(),
+            "posterLink": movieRow.find("div",class_='movie-info').a['data-img-src']
+        }
         Movies["movies"].append(temp)  
+
     return Movies
 
 def getLeagues(newCookies):
