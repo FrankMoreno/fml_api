@@ -11,9 +11,10 @@ def login(email, password):
     }
     
     session = requests.Session()
-    session.post(LOGIN_URL, data=payload)
+    response = session.post(LOGIN_URL, data=payload)
 
-    return session.cookies.get_dict()
+    #return session.cookies.get_dict()
+    return response
 
 def getMovies():
     MOVIES_URL = 'https://fantasymovieleague.com/checkoutmovies'
