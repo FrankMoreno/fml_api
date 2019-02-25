@@ -17,8 +17,8 @@ def login():
     # TODO Add check if user is already logged in
     newCookies = fml.login(request.args.get('email'),request.args.get('password'))
     session['cookies'] = json.dumps(newCookies)
-    return newCookies
-    
+    return jsonify({'sessionID':session['cookies']})
+
 @app.route('/movies', methods=['GET'])
 def returnMovies():
     movies = fml.getMovies()
