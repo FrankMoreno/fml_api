@@ -15,7 +15,7 @@ def heartBeat():
 @app.route('/login', methods=['POST'])
 def login():
     # TODO Add check if user is already logged in
-    newCookies = fml.login(request.args.get['email'],request.args.get['password'])
+    newCookies = fml.login(request.args.get('email'),request.args.get('password')
     session['cookies'] = json.dumps(newCookies)
     return 'You logged in'
     
