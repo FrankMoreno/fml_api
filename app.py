@@ -12,7 +12,7 @@ CORS(app)
 def heartBeat():
     return '{"Status": "Server is up."}'
 
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['POST', 'OPTIONS'])
 def login():
     if 'cookies' in session:
         return '{"Status" : "User already logged in"}'
