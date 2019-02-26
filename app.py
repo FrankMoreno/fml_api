@@ -5,7 +5,8 @@ import json
 import os
 
 app = Flask(__name__)
-app.secret_key = os.getenv('FLASK_KEY')
+# app.secret_key = os.getenv('FLASK_KEY')
+app.secret_key = b'123abc'
 CORS(app)
 
 @app.route('/', methods=['GET'])
@@ -17,7 +18,13 @@ def login():
     # TODO Add check if user is already logged in
     newCookies = fml.login(request.args.get('email'),request.args.get('password'))
     session['cookies'] = json.dumps(newCookies)
-    return jsonify({'sessionID':session['cookies']})
+    # return jsonify({'sessionID':session['cookies']})
+    return '{"Status" : "Login successful"}'
+
+@app.route('/logout', methods=['GET'])
+def logout():
+    session.pop
+    return '{"Status" : "Logout successful"}'
 
 @app.route('/movies', methods=['GET'])
 def returnMovies():
