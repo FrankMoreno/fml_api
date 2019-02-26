@@ -5,8 +5,7 @@ import json
 import os
 
 app = Flask(__name__)
-# app.secret_key = os.getenv('FLASK_KEY')
-app.secret_key = b'123abc'
+app.secret_key = os.getenv('FLASK_KEY')
 CORS(app)
 
 @app.route('/', methods=['GET'])
@@ -15,11 +14,13 @@ def heartBeat():
 
 @app.route('/login', methods=['POST'])
 def login():
-    # TODO Add check if user is already logged in
-    newCookies = fml.login(request.args.get('email'),request.args.get('password'))
-    session['cookies'] = json.dumps(newCookies)
-    # return jsonify({'sessionID':session['cookies']})
-    return '{"Status" : "Login successful"}'
+    if 'cookies' in session:
+        return '{"Status" : "User already logged in"}'
+    else:
+        newCookies = fml.login(request.args.get('email'),request.args.get('password'))
+        session['cookies'] = json.dumps(newCookies)
+        # return jsonify({'sessionID':session['cookies']})
+        return '{"Status" : "Login successful"}'
 
 @app.route('/logout', methods=['GET'])
 def logout():
