@@ -23,7 +23,7 @@ def login():
 
 @app.route('/logout', methods=['GET'])
 def logout():
-    session.pop
+    session.pop('cookies', None)
     return '{"Status" : "Logout successful"}'
 
 @app.route('/movies', methods=['GET'])
