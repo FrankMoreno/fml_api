@@ -21,7 +21,7 @@ def login():
         session['cookies'] = json.dumps(newCookies)
         # return jsonify({'sessionID':session['cookies']})
         response = jsonify({"Status" : "Login successful"})
-    response.headers.add('Access-Control-Allow-Origin', 'true')
+    response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000/')
     return response
 
 @app.route('/logout', methods=['GET'])
