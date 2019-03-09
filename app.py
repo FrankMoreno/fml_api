@@ -15,17 +15,19 @@ def heartBeat():
 @app.route('/login', methods=['POST', 'OPTIONS'])
 def login():
     if 'cookies' in session:
-        return '{"Status" : "User already logged in"}'
+        response = jsonify({"Status" : "User already logged in"})
     else:
         newCookies = fml.login(request.args.get('email'),request.args.get('password'))
         session['cookies'] = json.dumps(newCookies)
         # return jsonify({'sessionID':session['cookies']})
-        return '{"Status" : "Login successful"}'
+        response = jsonify({"Status" : "Login successful"})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 @app.route('/logout', methods=['GET'])
 def logout():
     session.pop('cookies', None)
-    return '{"Status" : "Logout successful"}'
+    return jsonify({"Status" : "Logout successful"})
 
 @app.route('/movies', methods=['GET'])
 def returnMovies():
@@ -38,7 +40,7 @@ def returnLeagues():
         leagues = fml.getLeagues(session['cookies'])
         return jsonify(leagues)
     else:
-        return jsonify('{}')                         
+        return jsonify({})                         
 
 @app.route('/estimates', methods=['GET'])
 def returnEstimates():
