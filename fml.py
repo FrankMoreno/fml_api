@@ -81,7 +81,7 @@ def getPicks():
 
 def main():
     # print(getLeagues())
-    # print(getMovies())
+    print(getMovies())
     # print(getEstimates())
 
 if __name__ == '__main__':
