@@ -11,9 +11,9 @@ CORS(app)
 def heartBeat():
     return '{"Status": "Server is up."}'
 
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['POST', 'OPTIONS'])
 def login():
-    token = fml.login(request.args.get('email'),request.args.get('password'))
+    token = fml.login(request.form.get('email'),request.form.get('password'))
     return jsonify({"authToken" : token})
 
 @app.route('/movies', methods=['GET'])

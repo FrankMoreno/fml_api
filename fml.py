@@ -1,6 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
 
+# All these methods should return actual response objects
+
 def login(email, password):
     LOGIN_URL = 'https://fantasymovieleague.com/auth/loginconfirm'
     payload = {
