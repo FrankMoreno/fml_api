@@ -1,7 +1,5 @@
 import requests
 from bs4 import BeautifulSoup
-import time
-import json
 
 def login(email, password):
     LOGIN_URL = 'https://fantasymovieleague.com/auth/loginconfirm'
@@ -12,8 +10,10 @@ def login(email, password):
     
     session = requests.Session()
     session.post(LOGIN_URL, data=payload)
-
-    return session.cookies.get_dict()
+    if 'ku' in session.cookies.get_dict():
+        return (session.cookies.get_dict())['ku']
+    else:
+        return '{}'
 
 def getMovies():
     MOVIES_URL = 'https://fantasymovieleague.com/checkoutmovies'
@@ -36,7 +36,6 @@ def getMovies():
 def getLeagues(newCookies):
     LEAGUES_URL = 'https://fantasymovieleague.com/league/directory'
     Leagues = {}
-    newCookies = json.loads(newCookies)
 
     session=requests.Session()
     response = session.get(LEAGUES_URL, cookies=newCookies)
@@ -82,8 +81,8 @@ def getPicks():
 
 def main():
     # print(getLeagues())
-    print(getMovies())
-    getEstimates()
+    # print(getMovies())
+    # print(getEstimates())
 
 if __name__ == '__main__':
     main()
