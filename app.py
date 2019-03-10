@@ -1,7 +1,6 @@
-from flask import Flask, session, jsonify, request
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 import fml
-import json
 import os
 
 app = Flask(__name__)
@@ -12,22 +11,10 @@ CORS(app)
 def heartBeat():
     return '{"Status": "Server is up."}'
 
-@app.route('/login', methods=['POST', 'OPTIONS'])
+@app.route('/login', methods=['POST'])
 def login():
-    if 'cookies' in session:
-        response = jsonify({"Status" : "User already logged in"})
-    else:
-        newCookies = fml.login(request.args.get('email'),request.args.get('password'))
-        session['cookies'] = json.dumps(newCookies)
-        # return jsonify({'sessionID':session['cookies']})
-        response = jsonify({"Status" : "Login successful"})
-    response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
-    return response
-
-@app.route('/logout', methods=['GET'])
-def logout():
-    session.pop('cookies', None)
-    return jsonify({"Status" : "Logout successful"})
+    token = fml.login(request.args.get('email'),request.args.get('password'))
+    return jsonify({"authToken" : token})
 
 @app.route('/movies', methods=['GET'])
 def returnMovies():
@@ -36,11 +23,9 @@ def returnMovies():
 
 @app.route('/leagues', methods=['GET'])
 def returnLeagues():
-    if 'cookies' in session:
-        leagues = fml.getLeagues(session['cookies'])
-        return jsonify(leagues)
-    else:
-        return jsonify({})                         
+    authToken = request.args.get('authToken')
+    leagues = fml.getLeagues({'ku':authToken})
+    return jsonify(leagues)                        
 
 @app.route('/estimates', methods=['GET'])
 def returnEstimates():
