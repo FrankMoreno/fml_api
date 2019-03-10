@@ -37,15 +37,18 @@ def getLeagues(newCookies):
     LEAGUES_URL = 'https://fantasymovieleague.com/league/directory'
     Leagues = {}
 
-    session=requests.Session()
-    response = session.get(LEAGUES_URL, cookies=newCookies)
+    try:
+        session=requests.Session()
+        response = session.get(LEAGUES_URL, cookies=newCookies)
 
-    soup = BeautifulSoup(response.text, 'html.parser')
-    leagueRows = soup.find("table",class_='tableType-league noLeagues').tbody
-    for leagueRow in leagueRows.find_all("tr"):
-        leagueName = leagueRow.find("td",class_='league-name first').a.get_text()
-        leagueLink = leagueRow.find("td",class_='league-name first').a['href']
-        Leagues[leagueName] = {'link':leagueLink}
+        soup = BeautifulSoup(response.text, 'html.parser')
+        leagueRows = soup.find("table",class_='tableType-league noLeagues').tbody
+        for leagueRow in leagueRows.find_all("tr"):
+            leagueName = leagueRow.find("td",class_='league-name first').a.get_text()
+            leagueLink = leagueRow.find("td",class_='league-name first').a['href']
+            Leagues[leagueName] = {'link':leagueLink}
+    except:
+        Leagues = {"Error":"Unknown exception"}
 
     return Leagues
 

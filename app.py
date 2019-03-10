@@ -24,11 +24,8 @@ def returnMovies():
 @app.route('/leagues', methods=['GET'])
 def returnLeagues():
     authToken = request.args.get('authToken')
-    if authToken == '{}':
-        return jsonify({})
-    else:
-        leagues = fml.getLeagues({'ku':authToken})
-        return jsonify(leagues)                        
+    leagues = fml.getLeagues({'ku':authToken})
+    return jsonify(leagues)                        
 
 @app.route('/estimates', methods=['GET'])
 def returnEstimates():
